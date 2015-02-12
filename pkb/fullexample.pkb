@@ -13,6 +13,7 @@ write "Hello, "
 write $name
 print "!"
 
-if ($name == "Patrick")
+$tmp = "Patrick"
+if $name == $tmp
 print "hello!"
 end 
