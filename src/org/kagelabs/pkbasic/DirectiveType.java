@@ -3,6 +3,7 @@ package org.kagelabs.pkbasic;
 /**
  * Directive tyoe enum
  * @author Patrick Kage
+ * @author Caleb
  *
  */
 public enum DirectiveType {

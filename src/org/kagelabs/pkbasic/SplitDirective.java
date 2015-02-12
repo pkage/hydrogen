@@ -5,6 +5,7 @@ import java.util.ArrayList;
 /**
  * Utility class to split a directive's text into parts so it can be parsed by the classifier
  * @author Patrick Kage
+ * @author Caleb
  * 
  */
 public class SplitDirective extends ArrayList<String> {

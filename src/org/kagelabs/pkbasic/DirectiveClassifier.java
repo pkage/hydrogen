@@ -3,6 +3,7 @@ package org.kagelabs.pkbasic;
 /**
  * Utility class to determine directive's statement type
  * @author Patrick Kage
+ * @author Caleb
  *
  */
 public class DirectiveClassifier {
