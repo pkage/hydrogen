@@ -1,5 +1,6 @@
-# by default imports use org.kagelabs.pkb_aux
+// by default imports use org.kagelabs.pkb_aux
 import io
+// contains print, write, read
 
 print "Hello World!"
 
@@ -14,5 +15,12 @@ write $name
 print "!"
 
 if ($name == "Patrick")
-print "hello!"
-end 
+goto 12
+
+goto 13
+
+label 12
+print "hi patrick"
+
+label 13
+abort
