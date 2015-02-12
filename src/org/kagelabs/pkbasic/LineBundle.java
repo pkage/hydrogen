@@ -10,6 +10,10 @@ import java.util.ArrayList;
 public class LineBundle {
 	private ArrayList<String> bundle;
 	
+	LineBundle() {
+		bundle = new ArrayList<String>();
+	}
+	
 	public void add(String str) {
 		bundle.add(str);
 	}
