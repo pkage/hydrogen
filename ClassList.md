@@ -1,2 +1,25 @@
 # class list
 
+ - Action
+	- An interface that provides methods to run code
+ - ActionMetadata
+ 	- Provides the name of an argument, and the content of the argument, (and prefixes), before the arguments run.
+ - ActionProcessor	
+ - ActionProvider 
+ - ComparationResult
+ - Context
+ - Directive
+ - DirectiveBundle
+ - DirectiveClassifier
+ - DirectiveType
+ - Error
+ - ErrorHandler
+ - ErrorTypes
+ - FileExtractor
+ - Interpreter
+ - LineBundle
+ - Main
+ - Reference
+ - SplitDirective
+ - Value
+ - VarType
