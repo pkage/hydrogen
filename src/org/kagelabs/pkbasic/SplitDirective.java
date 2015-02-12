@@ -19,14 +19,20 @@ public class SplitDirective extends ArrayList<String> {
 	}
 	
 	public void split(String line) {
-		String tmp = new String(); 
+		String tmp = new String();
+		boolean isQuote = false;
 		// TODO : make this work with quotations
+		// TODO : Patrick make your comments intelligent
 		for (int c = 0; c < line.length(); c++) {
 			char cAt = line.charAt(c);
 			tmp += cAt;
-			if (cAt == ' ') {
+			if (cAt == ' '&&isQuote==false) {
 				this.add(tmp);
 				tmp = "";
+			}
+			else if(cAt == '\"') {
+				if(isQuote==false) {isQuote = true;}
+				else {isQuote = false;}
 			}
 		}
 	}
