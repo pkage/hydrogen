@@ -6,6 +6,13 @@ print "Hello World!"
 write "What's your name? : "
 read $name
 
+#num = 12
+$num = "12"
+
 write "Hello, "
-write $n
+write $name
 print "!"
+
+if ($name == "Patrick")
+print "hello!"
+end 
