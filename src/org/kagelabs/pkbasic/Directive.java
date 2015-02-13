@@ -38,6 +38,11 @@ public class Directive {
 		this.refreshSplit();
 	}
 
+	public Directive(String full) {
+		this.full = full;
+		this.refreshSplit();
+	}
+
 	Directive(DirectiveType type, String full) {
 		this.full = full;
 		this.stype = type;
