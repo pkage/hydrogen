@@ -31,11 +31,15 @@ public class Main {
 		}
 		
 		Directive directive = new Directive(input);
-		System.out.println(directive.getFull());
+		//System.out.println(directive.getFull());
 		for(int i = 0; i < directive.getSplit().size(); i++) {
-			System.out.println(directive.getSplit().get(i)+" "+i);
+			System.out.println(directive.getSplit().get(i));
 		}
-		System.out.println(directive.getSplit().size());
-		
+		//System.out.println(directive.getSplit().size());
+		DirectiveClassifier.classifyDirective(directive);
+		if(directive.getType() == DirectiveType.ASSIGNMENT)
+		{
+		System.out.println("yes");
+		}
 	}
 }

@@ -7,7 +7,7 @@ package org.kagelabs.pkbasic;
  *
  */
 public class DirectiveClassifier {
-	public Directive classifyDirective(Directive input) {
+	public static Directive classifyDirective(Directive input) {
 		
 		if(input.getSplit().get(0).startsWith("$")||input.getSplit().get(0).startsWith("#")) {
 			input.setType(DirectiveType.ASSIGNMENT);
