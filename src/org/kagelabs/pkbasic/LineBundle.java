@@ -29,5 +29,7 @@ public class LineBundle {
 		return true;
 	}
 	
-	
+	public int length() {
+		return bundle.size();
+	}
 }
