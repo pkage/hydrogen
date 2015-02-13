@@ -1,25 +1,26 @@
 # class list
 
- - Action
+ - Action (Alex)
 	- An interface that provides methods to run code
- - ActionMetadata
+ - ActionMetadata (Alex)
  	- Provides the name of an argument, and the content of the argument, (and prefixes), before the arguments run.
- - ActionProcessor	
- - ActionProvider 
- - ComparationResult
- - Context
- - Directive
- - DirectiveBundle
- - DirectiveClassifier
- - DirectiveType
- - Error
- - ErrorHandler
- - ErrorTypes
- - FileExtractor
- - Interpreter
- - LineBundle
- - Main
- - Reference
- - SplitDirective
- - Value
- - VarType
+ - ActionProcessor (Alex)
+ - ActionProvider (Alex)
+ - ComparationResult (Patrick)
+ - Context (Patrick)
+ - Directive (Caleb)
+ - DirectiveBundle (Caleb)
+ - DirectiveClassifier (Caleb)
+ - DirectiveType (Caleb)
+ - Error (Alex)
+ - ErrorHandler (Alex)
+ - ErrorTypes (Patrick)
+ - FileExtractor (Patrick)
+ - Interpreter (All)
+ - LineBundle (Nobody)
+ - Main (All)
+ - Preprocessor (Patrick)
+ - Reference (Patrick)
+ - SplitDirective (Caleb)
+ - Value (Patrick)
+ - VarType (Patrick)

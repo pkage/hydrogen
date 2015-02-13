@@ -5,6 +5,7 @@ import java.util.ArrayList;
 /**
  * A storage class for a bundle of directives
  * @author Patrick Kage
+ * @author Caleb
  *
  */
 public class DirectiveBundle {

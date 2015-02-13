@@ -62,7 +62,7 @@ public class Value {
 		return ComparationResult.INVALID; // something went wrong, should never execute;
 	}
 	
-	Value(VarType type) {
+	public Value(VarType type) {
 		this.setType(type);
 	}
 }

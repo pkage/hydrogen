@@ -4,6 +4,7 @@ package org.kagelabs.pkbasic;
 /**
  * Single directive for the directive processor
  * @author Patrick Kage
+ * @author Caleb
  *
  */
 public class Directive {
