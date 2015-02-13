@@ -4,7 +4,8 @@ import java.util.ArrayDeque;
 
 /**
  * Class to keep track of errors emitted by the project in various states of failure.
- * @author Patrick Kage && Alex Zheng
+ * @author Patrick Kage
+ * @author Alex Zheng
  *
  */
 public class ErrorHandler {
