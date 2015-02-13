@@ -25,8 +25,8 @@ public class SplitDirective extends ArrayList<String> {
 		// TODO : Patrick make your comments intelligent
 		for (int c = 0; c < line.length(); c++) {
 			char cAt = line.charAt(c);
-			if(cAt!=' ') {tmp += cAt;}
-			if ((cAt == ' '||c==line.length()-1)&&isQuote==false) {
+			if((cAt!=' ')||(cAt==' '&&isQuote==true)) {tmp += cAt;}
+			if (((cAt == ' '||c==line.length()-1)&&isQuote==false)||((cAt == '\"')&&(c==line.length()-1))) {
 				this.add(tmp);
 				tmp = "";
 			}
