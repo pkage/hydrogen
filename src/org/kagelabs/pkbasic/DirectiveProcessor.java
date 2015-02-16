@@ -3,6 +3,7 @@ package org.kagelabs.pkbasic;
 /**
  * Directive Processor
  * @author Patrick Kage
+ * @author Caleb
  *
  */
 public class DirectiveProcessor {
@@ -37,12 +38,34 @@ public class DirectiveProcessor {
 	}
 	
 	private Value toValue(String str) {
-		// TODO : turn a string into a value
-		return new Value(VarType.INVALID);
-	}
+		if(str.startsWith("$")) {
+			Value value = new Value(VarType.STRING);
+			value.setString(global.getVariable(new Reference(str.substring(1,  str.length()-2), VarType.STRING)).getString());
+			return value;
+		}
+		else if(str.startsWith("\"")) {
+			Value value = new Value(VarType.STRING);
+			value.setString(str.substring(1, str.length()-2));
+			return value;
+		}
+		else if(str.startsWith("#")) {
+			Value value = new Value(VarType.NUMBER);
+			value.setNumber(global.getVariable(new Reference(str.substring(1, str.length()-2), VarType.NUMBER)).getNumber());
+			return value;
+		}
+		Value value = new Value(VarType.NUMBER);
+		double num = 0;
+		try {
+			num = Double.parseDouble(str);
+		} catch(NumberFormatException nfe) {
+			return new Value(VarType.INVALID);
+		}
+		value.setNumber(num);
+		return value;
+		}
 	
 	public void registerActionProvider(ActionProvider ap) {
-		// TODO : add a new action provider
+		this.ap.registerActionProvider(ap);
 	}
 	
 	private ComparationResult compare(Reference r1, Reference r2) {
