@@ -43,6 +43,10 @@ public class ActionProcessor {
 		}
 		return true;
 	}
+	
+	public void registerActionProvider(ActionProvider ap) {
+		actionProviders.add(ap);
+	}
 
 	private HashMap<ActionMetadata, Action> pullActions() {
 		// TODO Auto-generated method stub
