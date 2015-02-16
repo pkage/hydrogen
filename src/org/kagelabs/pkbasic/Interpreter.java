@@ -8,10 +8,11 @@ package org.kagelabs.pkbasic;
 public class Interpreter {
 	private LineBundle lines;
 	private Context global;
+	private DirectiveProcessor dirp;
 	
 	public void initialize(String filename) {
-		FileExtractor fe = new FileExtractor();
-		lines = fe.extract(filename);
+		Preprocessor pp = new Preprocessor();
+		lines = pp.processFile(filename);
 		
 	}
 	
