@@ -65,4 +65,14 @@ public class Value {
 	public Value(VarType type) {
 		this.setType(type);
 	}
+	
+	public String toString() {
+		if (getType() == VarType.STRING) {
+			return getString();
+		} else if (getType() == VarType.NUMBER) {
+			return String.valueOf(getNumber());
+		} else {
+			return "";
+		}
+	}
 }
