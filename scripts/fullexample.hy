@@ -1,11 +1,11 @@
 // by default imports use org.kagelabs.pkb_aux
-import io
+import org.kagelabs.hydrogen.stl.io
 // contains print, write, read
 
 print "Hello World!"
 
-write "What's your name? : "
-read $name
+$n % read "What's your name? : "
+
 
 #num = 12
 $num = "12"
