@@ -13,13 +13,22 @@ public class DirectiveProcessor {
 	private Context global;
 	
 	public DirectiveProcessor() {
-		// TODO: initialize all variables
+		reset();
+		this.bundle = new DirectiveBundle();
+		this.ap = new ActionProcessor();
+		this.global = new Context();
 		
 	}
 	
+	public DirectiveProcessor(DirectiveBundle db) {
+		reset();
+		this.bundle = db;
+		this.ap = new ActionProcessor();
+		this.global = new Context();
+	}
+	
 	public void reset() {
-		// TODO: Reset DirectiveProcessor state
-		// this means reset the head
+		this.head = 0;
 	}
 	
 	public boolean tick(ErrorHandler eh) {
@@ -28,13 +37,19 @@ public class DirectiveProcessor {
 	}
 	
 	private int getLabelLocation(String id) {
-		// TODO : find a thing from id
+		for(int i = 0; i < bundle.getSize(); i++) {
+			if(bundle.get(i).getSplit().get(0).equals("label")&&bundle.get(i).getSplit().get(1).equals(id)) {
+				return i;
+			}
+		}
 		return -1;
 	}
 	
 	public Value resolveReference(Reference ref) {
-		// TODO : resolve references out of global context
-		return new Value(VarType.INVALID);
+		if(!global.contains(ref)) {
+			return new Value(VarType.INVALID);
+		}
+		return global.getVariable(ref);
 	}
 	
 	private Value toValue(String str) {
