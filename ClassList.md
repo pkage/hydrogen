@@ -12,6 +12,7 @@
  - DirectiveBundle (Caleb)
  - DirectiveClassifier (Caleb)
  - DirectiveType (Caleb)
+ - DirectiveProcessor (Caleb)
  - Error (Alex)
  - ErrorHandler (Alex)
  - ErrorTypes (Patrick)

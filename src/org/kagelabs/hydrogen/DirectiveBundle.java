@@ -26,5 +26,9 @@ public class DirectiveBundle {
 		return true;
 	}
 	
+	public int getSize() {
+		return bundle.size();
+	}
+	
 	
 }
