@@ -32,6 +32,7 @@ public class sys {
                                         		if (values.length != 1 || values[0].getType() != VarType.STRING) {
                                         			eh.addError(new Error("Invalid argument!", "sys can only accept one string", "sys"));
                                         		}
+                                        		Runtime.getRuntime().exec(values[0].getString());
                                             	return new Value(VarType.INVALID);
                                         }
                                 }
