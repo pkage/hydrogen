@@ -85,4 +85,11 @@ public class io {
                 
                 return new IOActionProvider();
         }
+		public String getProviderName() {
+			return "IOActionProvider";	
+		}
+				
+				public String[] getActionNames() {
+					return new String[]{ "Print","Read" };
+				}
 }
