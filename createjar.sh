@@ -1,6 +1,6 @@
 #! /bin/sh
 
-echo "class name to regex: "
+printf "class name to regex: "
 read fname
 
 mkdir -p org/kagelabs/hydrogen/stl
