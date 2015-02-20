@@ -20,7 +20,7 @@ public class ErrorHandler {
 	}
 	
 	public String generateReport() {
-		// do some shit here
+		// do some sh*t here
 		String[] errorNames = new String[stack.size()];
 		String[] errorReasons = new String[stack.size()];
 		String[] errorOrigins = new String[stack.size()];
@@ -34,11 +34,11 @@ public class ErrorHandler {
 		for(int i = 0; i<stack.size(); i++){
 			errorOrigins[i] = ((Error) stack2[i]).getOrigin();
 		}
-		String errorReport = "ERROR: /n";
+		String errorReport = "ERROR: \n";
 		for(int i = 0; i<stack.size(); i++){
-			errorReport += "Error Type: " + errorNames[i] + "   ";
-			errorReport += "Error Reason: " + errorReasons[i] + "   ";
-			errorReport += "Error Origin: " + errorOrigins[i] + "    /n"; 
+			errorReport += "Error \t Type: " + errorNames[i] + "   ";
+			errorReport += "Error \t Reason: " + errorReasons[i] + "   ";
+			errorReport += "Error \t Origin: " + errorOrigins[i] + "    \n"; 
 		}
 		return errorReport;
 	}

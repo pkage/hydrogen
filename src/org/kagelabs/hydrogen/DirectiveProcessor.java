@@ -11,6 +11,7 @@ public class DirectiveProcessor {
 	private DirectiveBundle bundle;
 	private ActionProcessor ap;
 	private Context global;
+	private boolean finished;
 	
 	public DirectiveProcessor() {
 		reset();
@@ -32,7 +33,52 @@ public class DirectiveProcessor {
 	}
 	
 	public boolean tick(ErrorHandler eh) {
-		// TODO : execute one tick
+		if(head < bundle.getSize()) {
+			switch(bundle.get(head).getType()) {
+			case ASSIGNMENT:
+				//TODO
+				break;
+			case BLANK:
+				break;
+			case CALLEXTERNAL:
+				//TODO
+				break;
+			case COMPARATION:
+				//TODO
+				break;
+			case GOTO:
+				for(int i = 0; i < bundle.getSize(); i++) {
+					if((bundle.get(i).getType() == DirectiveType.LABEL)&&(bundle.get(i).getSplit().get(1).equals(bundle.get(head).getSplit().get(1)))) {
+						head = i;
+						return true;
+					}
+				}
+				break;
+			case INVALID:
+				eh.addError(new Error("Syntax Error", "Invalid Directive Type", "Directive Processor"));
+				return false;
+			case LABEL:
+				break;
+			case LOADEXTERNAL:
+				//TODO
+				break;
+			case SUBROUTINECALL:
+				eh.addError(new Error("Syntax Error", "Directive Type Not Supported", "Directive Processor"));
+				return false;
+			case SUBROUTINEDEFINITION:
+				eh.addError(new Error("Syntax Error", "Directive Type Not Supported", "Directive Processor"));
+				return false;
+			case TERMINATION:
+				this.finished = true;
+				return true;
+			default:
+				eh.addError(new Error("Syntax Error", "Directive Type Not Found", "Directive Processor"));
+				return false;
+			}
+			
+			head++;
+			return true;
+		}
 		return false;
 	}
 	
@@ -89,5 +135,9 @@ public class DirectiveProcessor {
 	
 	private ComparationResult compare(Value v1, Value v2) {
 		return ComparationResult.EQUALTO;
+	}
+
+	public boolean isFinished() {
+		return finished;
 	}
 }

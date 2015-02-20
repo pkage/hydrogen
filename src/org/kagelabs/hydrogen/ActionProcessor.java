@@ -12,6 +12,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.io.*;
 
 public class ActionProcessor {
@@ -113,5 +114,12 @@ public class ActionProcessor {
 			this.actionProviders.get(c).init(eh);
 		}
 		this.actions = pullActions();
+	}
+	public boolean hasAction(String a){
+		for(ActionMetadata am : this.actions.keySet()){
+			if(am.getName().equals(a))
+				return true;
+		}
+		return false;
 	}
 }

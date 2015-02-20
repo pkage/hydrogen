@@ -4,6 +4,7 @@ import org.kagelabs.hydrogen.*;
 import org.kagelabs.hydrogen.Error;
 
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class io {
         public ActionProvider getActionProvider() {
@@ -41,6 +42,34 @@ public class io {
                                 }
                                 Print print = new Print();
                                 this.actionMap.put(print.getMetadata(), print);
+                                
+                                class Read implements Action {
+                                    ActionMetadata meta;
+                                    Read() {
+                                            meta = new ActionMetadata();
+                                            meta.setName("read");
+                                            meta.setReturnPrefix('\0');
+                                    }
+                                    public ActionMetadata getMetadata() {
+                                            return meta;
+                                    }
+                                    public void init(ErrorHandler eh) {
+                                            // do nothing
+                                    }
+                                    public Value call(ErrorHandler eh, Value[] values) {
+                                            // if there are arguments, system.out.print the first one
+                                    		// scan system.in for strings
+                                    		// return a string
+                                    			Scanner kb = new Scanner(System.in);
+                                    			if (values.length >= 1)
+                                    			{
+                                    				System.out.print(values[0].toString());
+                                    			}
+                                    			Value value = new Value(VarType.STRING);
+                                    			value.setString(kb.nextLine());
+                                    			return value;
+                                    		}       
+                                    }
                         }
     
 
@@ -60,6 +89,6 @@ public class io {
         	return "IOActionProvider";
         }
         public String[] getActionNames() {
-        	return new String[]{ "Print" };
+        	return new String[]{ "Print", "Read" };
         }
 }
