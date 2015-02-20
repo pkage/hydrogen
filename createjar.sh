@@ -10,5 +10,9 @@ mv $fname $fname.jar
 rm -r org/
 printf "created jar "
 printf $fname.jar
-printf "\n"
+printf "\nmove to /usr/local/hydrogen/lib? (y/n): "
+read move
+if [ "$move" = "y" ]; then
+	sudo mv $fname.jar /usr/local/hydrogen/lib/
+fi
 
