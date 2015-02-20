@@ -1,5 +1,7 @@
 package org.kagelabs.hydrogen;
 
+import java.util.ArrayList;
+
 /**
  * Directive Processor
  * @author Patrick Kage
@@ -34,23 +36,64 @@ public class DirectiveProcessor {
 	
 	public boolean tick(ErrorHandler eh) {
 		if(head < bundle.getSize()) {
+			System.out.println("exec " + bundle.get(head).getFull());
 			switch(bundle.get(head).getType()) {
 			case ASSIGNMENT:
-				//TODO
+				if (bundle.get(head).getSplit().size() != 3) {
+					eh.addError("Invalid assignment", "Invalid arg count", "Directive Processor");
+				}
+				System.out.println("Setting " + toReference(bundle.get(head).getSplit().get(0).toString() + " to " + ( (toValue(bundle.get(head).getSplit().get(2)).getType() == VarType.NUMBER) ? toValue(bundle.get(head).getSplit().get(2)).getNumber() : toValue(bundle.get(head).getSplit().get(2)).getString() )));
+				global.setVariable(toReference(bundle.get(head).getSplit().get(0)), toValue(bundle.get(head).getSplit().get(2)));
+				System.out.println(global.dump());
 				break;
 			case BLANK:
 				break;
 			case CALLEXTERNAL:
-				//TODO
+				Action act;
+				if (ap.hasAction(bundle.get(head).getSplit().get(0))) {
+					act = ap.getAction(bundle.get(head).getSplit().get(0));
+				} else {
+					eh.addError(new Error("Unknown Token", "Unregistered token execution", "Directive Processor"));
+					return false;
+				}
+				ArrayList<Value> args = new ArrayList<Value>();
+				for (int i = 1; i < bundle.get(head).getSplit().size(); i++) {
+					args.add(this.toValue(bundle.get(head).getSplit().get(i)));
+				}
+				Value[] argarr = args.toArray(new Value[args.size()]);
+				act.call(eh, argarr);
+				
 				break;
 			case COMPARATION:
-				//TODO
+				ComparationResult cr = toValue(bundle.get(head).getSplit().get(1)).compareTo(toValue(bundle.get(head).getSplit().get(3)));
+				ComparationType ct = toComparationType(bundle.get(head).getSplit().get(2));
+				if (cr == ComparationResult.INVALID) {
+					eh.addError("Invalid Comparation", "These two values can't be compared.", "Directive Processor");
+					return false;
+				}
+				if (ct == ComparationType.INVALID) {
+					eh.addError("Invalid Comparison", "Invalid comparation operand", "Directive Processor");
+				}
+				if ((ct == ComparationType.EQUALTO || ct == ComparationType.GREATERTHANOREQUALTO || ct == ComparationType.LESSTHANOREQUALTO) && cr == ComparationResult.EQUALTO) {
+					System.out.println("positive comparation");break;
+				} else if (ct == ComparationType.GREATERTHAN && cr == ComparationResult.GREATERTHAN) {
+					System.out.println("positive comparation");break;
+				} else if (ct == ComparationType.LESSTHAN && cr == ComparationResult.LESSTHAN) {
+					System.out.println("positive comparation");break;
+				} else if (ct == ComparationType.NOTEQUALTO && cr != ComparationResult.EQUALTO) {
+					System.out.println("positive comparation");break;
+				}
+				System.out.println("negative comparation");
+				head++;
 				break;
 			case GOTO:
 				for(int i = 0; i < bundle.getSize(); i++) {
-					if((bundle.get(i).getType() == DirectiveType.LABEL)&&(bundle.get(i).getSplit().get(1).equals(bundle.get(head).getSplit().get(1)))) {
-						head = i;
-						return true;
+					if (bundle.get(i).getType() == DirectiveType.LABEL) {
+						System.out.println("found label at " + i);
+						if (toValue(bundle.get(i).getSplit().get(1)).compareTo(toValue(bundle.get(head).getSplit().get(1))) == ComparationResult.EQUALTO) {
+							head = i;
+							break;
+						}
 					}
 				}
 				break;
@@ -60,17 +103,19 @@ public class DirectiveProcessor {
 			case LABEL:
 				break;
 			case LOADEXTERNAL:
-				//TODO
+				//TODO : make less shitty
+				System.out.println("Loading " + bundle.get(head).getSplit().get(1));
+				ap.importLibrary(eh, bundle.get(head).getSplit().get(1));
+				//ap.initAllActionProviders(eh);
+				
 				break;
-			case SUBROUTINECALL:
-				eh.addError(new Error("Syntax Error", "Directive Type Not Supported", "Directive Processor"));
-				return false;
-			case SUBROUTINEDEFINITION:
-				eh.addError(new Error("Syntax Error", "Directive Type Not Supported", "Directive Processor"));
-				return false;
+			
 			case TERMINATION:
 				this.finished = true;
 				return true;
+			case CALLEXTERNALWITHRET:
+			case SUBROUTINECALL:
+			case SUBROUTINEDEFINITION:
 			default:
 				eh.addError(new Error("Syntax Error", "Directive Type Not Found", "Directive Processor"));
 				return false;
@@ -82,6 +127,14 @@ public class DirectiveProcessor {
 		return false;
 	}
 	
+	public int getHead() {
+		return head;
+	}
+
+	public void setHead(int head) {
+		this.head = head;
+	}
+
 	private int getLabelLocation(String id) {
 		for(int i = 0; i < bundle.getSize(); i++) {
 			if(bundle.get(i).getSplit().get(0).equals("label")&&bundle.get(i).getSplit().get(1).equals(id)) {
@@ -99,19 +152,22 @@ public class DirectiveProcessor {
 	}
 	
 	private Value toValue(String str) {
+		System.out.println("resolving " + str);
 		if(str.startsWith("$")) {
 			Value value = new Value(VarType.STRING);
-			value.setString(global.getVariable(new Reference(str.substring(1,  str.length()-2), VarType.STRING)).getString());
+			System.out.println("global does " + ( (global.contains(new Reference(str.substring(1), VarType.STRING))) ? "" : "not " ) + "contain " + (new Reference(str.substring(1), VarType.STRING)).toString());
+			value.setString(global.getVariable(new Reference(str.substring(1), VarType.STRING)).getString());
+			System.out.println("resolved value as " + value.getString());
 			return value;
 		}
 		else if(str.startsWith("\"")) {
 			Value value = new Value(VarType.STRING);
-			value.setString(str.substring(1, str.length()-2));
+			value.setString(str.substring(1, str.length()-1));
 			return value;
 		}
 		else if(str.startsWith("#")) {
 			Value value = new Value(VarType.NUMBER);
-			value.setNumber(global.getVariable(new Reference(str.substring(1, str.length()-2), VarType.NUMBER)).getNumber());
+			value.setNumber(global.getVariable(new Reference(str.substring(1), VarType.NUMBER)).getNumber());
 			return value;
 		}
 		Value value = new Value(VarType.NUMBER);
@@ -123,21 +179,45 @@ public class DirectiveProcessor {
 		}
 		value.setNumber(num);
 		return value;
+	}
+	
+	private Reference toReference(String str) {
+		if(str.startsWith("$")) {
+			return new Reference(str.substring(1), VarType.STRING);
 		}
+		else if(str.startsWith("#")) {
+			return new Reference(str.substring(1), VarType.NUMBER);
+		} else {
+			return new Reference("", VarType.INVALID);
+		}
+	}
 	
 	public void registerActionProvider(ActionProvider ap) {
 		this.ap.registerActionProvider(ap);
 	}
 	
-	private ComparationResult compare(Reference r1, Reference r2) {
-		return ComparationResult.EQUALTO;
-	}
-	
-	private ComparationResult compare(Value v1, Value v2) {
-		return ComparationResult.EQUALTO;
+	private ComparationType toComparationType(String str) {
+		if (str.equals("==")) {
+			return ComparationType.EQUALTO;
+		} else if (str.equals("!=")) {
+			return ComparationType.NOTEQUALTO;
+		} else if (str.equals("<")) {
+			return ComparationType.LESSTHAN;
+		} else if (str.equals(">")) {
+			return ComparationType.GREATERTHAN;
+		} else if (str.equals("<=")) {
+			return ComparationType.LESSTHANOREQUALTO;
+		} else if (str.equals(">=")) {
+			return ComparationType.GREATERTHANOREQUALTO;
+		}
+		return ComparationType.INVALID;
 	}
 
 	public boolean isFinished() {
 		return finished;
+	}
+	
+	public void addActionProvider(ActionProvider adict) {
+		this.ap.registerActionProvider(adict);
 	}
 }

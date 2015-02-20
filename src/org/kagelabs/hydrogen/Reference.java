@@ -32,6 +32,7 @@ public class Reference {
 	}
 
 	public boolean equals(Reference ref) {
+		System.out.println("equals comparing " + this.toString() + " to " + ref.toString());
 		return (ref.name.equals(this.name) && ref.prefix == this.prefix);
 	}
 
@@ -74,6 +75,10 @@ public class Reference {
 			return false;
 		}
 		return true;
+	}
+	
+	public String toString() {
+		return prefix + name;
 	}
 }
  

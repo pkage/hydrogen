@@ -26,7 +26,7 @@ public class ActionProcessor {
 	
 	public boolean importLibrary(ErrorHandler eh, String name) {
 		try {
-			System.out.println("Will load \"" + "file:///usr/local/hydrogen/lib/" + name.substring(name.lastIndexOf('.') + 1) + ".jar");
+			System.out.println("Will load \"" + "file:///usr/local/hydrogen/lib/" + name.substring(name.lastIndexOf('.') + 1) + ".jar\"");
 			
 			// get the location of the aux binaries
 			URL location[] = {
@@ -61,7 +61,7 @@ public class ActionProcessor {
 			
 			ActionProvider ap = (ActionProvider) extractAP.invoke(lib.newInstance());
 			System.out.println("called extractor");
-			
+			ap.init(eh);
 			actionProviders.add(ap);
 			
 			loader.close();
@@ -108,6 +108,8 @@ public class ActionProcessor {
 		}
 		return null;
 	}
+	
+	
 	
 	public void initAllActionProviders(ErrorHandler eh) {
 		for (int c = 0; c < this.actionProviders.size(); c++) {

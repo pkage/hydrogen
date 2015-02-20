@@ -27,7 +27,7 @@ public class Preprocessor {
 	}
 	
 	private int firstInsertLocation(LineBundle lb) {
-		for (int c = 0; lb.length() > 0; c++) {
+		for (int c = 0; c < lb.length(); c++) {
 			String str = lb.get(c);
 			if (str.startsWith("insert")) {
 				return c;

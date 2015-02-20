@@ -12,13 +12,17 @@ public class Main {
 	public static void main(String[] args) {
 		//System.out.println("It's alive!");
 		Main main = new Main();
-		main.dload();
+		main.run();
 		//test();
 	}
 	
 	public void run() {
 		Interpreter hy = new Interpreter();
-		hy.initialize("scripts/fullexample.hy");
+		hy.initialize("scripts/alive.hy");
+		while (hy.canRunMore()) {
+			hy.tick();
+		}
+
 	}
 	
 	public static void test() {
@@ -35,7 +39,7 @@ public class Main {
 		Directive directive = new Directive(input);
 		//System.out.println(directive.getFull());
 		for(int i = 0; i < directive.getSplit().size(); i++) {
-			System.out.println(directive.getSplit().get(i));
+			System.out.println("[" + directive.getSplit().get(i) + "]");
 		}
 		//System.out.println(directive.getSplit().size());
 		DirectiveClassifier.classifyDirective(directive);

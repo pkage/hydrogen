@@ -36,9 +36,9 @@ public class ErrorHandler {
 		}
 		String errorReport = "ERROR: \n";
 		for(int i = 0; i<stack.size(); i++){
-			errorReport += "Error \t Type: " + errorNames[i] + "   ";
-			errorReport += "Error \t Reason: " + errorReasons[i] + "   ";
-			errorReport += "Error \t Origin: " + errorOrigins[i] + "    \n"; 
+			errorReport += "\tError Type: " + errorNames[i] + "   ";
+			errorReport += "\tError Reason: " + errorReasons[i] + "   ";
+			errorReport += "\tError Origin: " + errorOrigins[i] + "    \n"; 
 		}
 		return errorReport;
 	}
@@ -49,5 +49,10 @@ public class ErrorHandler {
 	
 	void clear() {
 		stack.clear();
+	}
+
+	public void addError(String name, String reason, String origin) {
+		this.addError(new Error(name, reason, origin));
+		
 	}
 }

@@ -32,4 +32,10 @@ public class LineBundle {
 	public int length() {
 		return bundle.size();
 	}
+	
+	public boolean set(int index, String str) {
+		if (index < 0 || index >= bundle.size()) return false;
+		bundle.set(index, str);
+		return true;
+	}
 }

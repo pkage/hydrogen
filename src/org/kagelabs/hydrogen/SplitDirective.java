@@ -31,8 +31,7 @@ public class SplitDirective extends ArrayList<String> {
 				tmp = "";
 			}
 			else if(cAt == '\"') {
-				if(isQuote==false) {isQuote = true;}
-				else {isQuote = false;}
+				isQuote = !isQuote;
 			}
 		}
 	}

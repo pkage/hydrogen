@@ -70,6 +70,9 @@ public class io {
                                     			return value;
                                     		}       
                                     }
+                                
+                                Read read = new Read();
+                                this.actionMap.put(read.getMetadata(), read);
                         }
     
 

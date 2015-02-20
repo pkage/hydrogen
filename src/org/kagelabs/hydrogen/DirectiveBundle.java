@@ -11,6 +11,10 @@ import java.util.ArrayList;
 public class DirectiveBundle {
 	private ArrayList<Directive> bundle;
 	
+	DirectiveBundle() {
+		bundle = new ArrayList<Directive>();
+	}
+	
 	public void add(Directive dir) {
 		bundle.add(dir);
 	}
