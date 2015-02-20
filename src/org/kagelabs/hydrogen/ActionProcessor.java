@@ -25,10 +25,11 @@ public class ActionProcessor {
 	
 	public boolean importLibrary(ErrorHandler eh, String name) {
 		try {
+			System.out.println("Will load \"" + "file:///usr/local/hydrogen/lib/" + name.substring(name.lastIndexOf('.') + 1) + ".jar");
 			
 			// get the location of the aux binaries
 			URL location[] = {
-							  new URL("file:///usr/local/hydrogen/lib/io2.jar"),
+							  new URL("file:///usr/local/hydrogen/lib/" + name.substring(name.lastIndexOf('.') + 1) + ".jar"),
 							  new URL("http://packages.kagelabs.org/host/")
 							 };
 			

@@ -17,8 +17,8 @@ public class Main {
 	}
 	
 	public void run() {
-		Interpreter pkb = new Interpreter();
-		pkb.initialize("pkb/fullexample.pkb");
+		Interpreter hy = new Interpreter();
+		hy.initialize("scripts/fullexample.hy");
 	}
 	
 	public static void test() {
@@ -49,6 +49,8 @@ public class Main {
 		ActionProcessor ap = new ActionProcessor();
 		ErrorHandler eh = new ErrorHandler();
 		ap.importLibrary(eh, "org.kagelabs.hydrogen.stl.io");
+		//ap.importLibrary(eh, "org.kagelabs.hydrogen.stl.io2");
+		ap.importLibrary(eh, "org.kagelabs.hydrogen.stl.sys");
 		if (eh.hasErrors()) {
 			System.out.println(eh.generateReport());
 		} else {
@@ -56,12 +58,13 @@ public class Main {
 		}
 		
 		ap.initAllActionProviders(eh);
+		eh.clear();
 		
 		System.out.println("Available methods: " + ap.getActions().size());
 		
 		System.out.println("Listing methods: ");
 		for (ActionMetadata am : ap.getActions().keySet()) {
-			System.out.println("\t[" + ((am.getReturnPrefix() == '\0') ? 'N' : am.getReturnPrefix()) + "]" + am.getName());
+			System.out.println("\t[" + ((am.getReturnPrefix() == '\0') ? 'V' : am.getReturnPrefix()) + "]" + am.getName());
 		}
 		
 		Scanner kb = new Scanner(System.in);

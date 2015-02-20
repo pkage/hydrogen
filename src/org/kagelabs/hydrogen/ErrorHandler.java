@@ -46,4 +46,8 @@ public class ErrorHandler {
 	public boolean hasErrors() {
 		return (stack.size() > 0);
 	}
+	
+	void clear() {
+		stack.clear();
+	}
 }

@@ -3,6 +3,7 @@ package org.kagelabs.hydrogen.stl;
 import org.kagelabs.hydrogen.*;
 import org.kagelabs.hydrogen.Error;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class sys {
@@ -32,7 +33,12 @@ public class sys {
                                         		if (values.length != 1 || values[0].getType() != VarType.STRING) {
                                         			eh.addError(new Error("Invalid argument!", "sys can only accept one string", "sys"));
                                         		}
-                                        		Runtime.getRuntime().exec(values[0].getString());
+                                        		try {
+													Runtime.getRuntime().exec(values[0].getString());
+												} catch (IOException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace(); 
+												}
                                             	return new Value(VarType.INVALID);
                                         }
                                 }
