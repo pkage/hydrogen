@@ -59,7 +59,6 @@ public class Context {
 	}
 	
 	public Value getVariable(Reference ref) {
-		System.out.println(this.dump());
 		if (!this.contains(ref)) {
 			return new Value(VarType.INVALID);
 		}

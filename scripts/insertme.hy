@@ -1,2 +1,2 @@
-# insert this file with "insert insertme.pkb"
+// insert this file with "insert insertme.pkb"
 print "inserted!"

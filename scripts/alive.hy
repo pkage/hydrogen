@@ -8,8 +8,7 @@ $msg = "hello world! i'm alive!"
 print $msg
 
 print "what's your name: "
-read
-$name = "Patrick"
+$name % read
 if $name == "Patrick"
 goto 1
 

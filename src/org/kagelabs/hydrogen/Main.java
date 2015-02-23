@@ -18,7 +18,7 @@ public class Main {
 	
 	public void run() {
 		Interpreter hy = new Interpreter();
-		hy.initialize("scripts/alive.hy");
+		hy.initialize("scripts/fullexample.hy");
 		while (hy.canRunMore()) {
 			hy.tick();
 		}

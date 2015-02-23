@@ -1,19 +1,20 @@
-// by default imports use org.kagelabs.pkb_aux
+// by default imports use org.kagelabs.hydrogen.stl
 import org.kagelabs.hydrogen.stl.io
 // contains print, write, read
 
 print "Hello World!"
 
-$n % read "What's your name? : "
+write "What's your name? : "
+$n % read
 
 
 #num = 12
 $num = "12"
 
 write "Hello, "
-write $name
+write $n
 print "!"
-if ($name == "Patrick")
+if $n == "Patrick"
 goto 12
 
 goto 13
@@ -22,4 +23,4 @@ label 12
 print "hi patrick"
 
 label 13
-insert insertme.pkb
+//insert insertme.pkb

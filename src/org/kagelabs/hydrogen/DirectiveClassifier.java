@@ -15,6 +15,7 @@ public class DirectiveClassifier {
 		
 		if (input.getSplit().size() > 1 && input.getSplit().get(1).equals("%")) {
 			input.setType(DirectiveType.CALLEXTERNALWITHRET);
+			return input;
 		}
 		
 		if(input.getSplit().size() > 0) {
@@ -26,7 +27,6 @@ public class DirectiveClassifier {
 		
 			switch(input.getSplit().get(0)) {
 			case "import":
-				System.out.println(input.getFull() + " is LOADEXTERNAL");
 				input.setType(DirectiveType.LOADEXTERNAL);
 				break;
 			case "if":

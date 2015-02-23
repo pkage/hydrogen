@@ -48,7 +48,7 @@ public class io {
                                     Read() {
                                             meta = new ActionMetadata();
                                             meta.setName("read");
-                                            meta.setReturnPrefix('\0');
+                                            meta.setReturnPrefix('$');
                                     }
                                     public ActionMetadata getMetadata() {
                                             return meta;
@@ -68,8 +68,35 @@ public class io {
                                     			Value value = new Value(VarType.STRING);
                                     			value.setString(kb.nextLine());
                                     			return value;
-                                    		}       
+                                    }       
+                                }
+                        		
+                                class Write implements Action {
+                                    ActionMetadata meta;
+                                    Write() {
+                                            meta = new ActionMetadata();
+                                            meta.setName("write");
+                                            meta.setReturnPrefix('\0');
                                     }
+                                    public ActionMetadata getMetadata() {
+                                            return meta;
+                                    }
+                                    public void init(ErrorHandler eh) {
+                                            // do nothing
+                                    }
+                                    public Value call(ErrorHandler eh, Value[] values) {
+                                            for (int c = 0; c < values.length; c++) {
+                                                    if (values[c].getType() == VarType.INVALID) {
+                                                            eh.addError(new Error("Invalid print!", "The variable you are trying to print is invalid!", "io"));
+                                                            continue;
+                                                    }
+                                                    System.out.print( ((values[c].getType() == VarType.NUMBER) ? values[c].getNumber() : values[c].getString()) );
+                                            }
+                                            return new Value(VarType.INVALID);
+                                    }
+                            }
+                            Write write = new Write();
+                            this.actionMap.put(write.getMetadata(), write);
                                 
                                 Read read = new Read();
                                 this.actionMap.put(read.getMetadata(), read);

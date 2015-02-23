@@ -29,7 +29,6 @@ public class Interpreter {
 		lines = pp.processFile(filename);
 		DirectiveBundle db = new DirectiveBundle();
 		for (int c = 0; c < lines.length(); c++) {
-			System.out.println("working on \"" + lines.get(c) + "\"");
 			Directive current = new Directive(lines.get(c));
 			current = DirectiveClassifier.classifyDirective(current);
 			

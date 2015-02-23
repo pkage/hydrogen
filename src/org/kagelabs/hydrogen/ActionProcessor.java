@@ -26,12 +26,13 @@ public class ActionProcessor {
 	
 	public boolean importLibrary(ErrorHandler eh, String name) {
 		try {
-			System.out.println("Will load \"" + "file:///usr/local/hydrogen/lib/" + name.substring(name.lastIndexOf('.') + 1) + ".jar\"");
+			//System.out.println("Will load \"" + "file:///usr/local/hydrogen/lib/" + name.substring(name.lastIndexOf('.') + 1) + ".jar\"");
 			
 			// get the location of the aux binaries
 			URL location[] = {
-							  new URL("file:///usr/local/hydrogen/lib/" + name.substring(name.lastIndexOf('.') + 1) + ".jar"),
-							  new URL("http://packages.kagelabs.org/host/")
+							  new URL("file:///usr/local/hydrogen/lib/" + name.substring(name.lastIndexOf('.') + 1) + ".jar"), 
+							  new URL("http://packages.kagelabs.org/host/" + name.substring(name.lastIndexOf('.') + 1) + ".jar"),
+							  new URL("http://github.com/quadnix/hydrogen/blob/master/stljars/" + name.substring(name.lastIndexOf('.') + 1) + ".jar?raw=true")
 							 };
 			
 			// create a class loader with the location
@@ -41,7 +42,7 @@ public class ActionProcessor {
 			
 			// extract the class
 			Class<?> lib = loader.loadClass(name);
-			System.out.println("loaded main class");
+		//	System.out.println("loaded main class");
 			
 			
 			// load inner classes
@@ -51,16 +52,14 @@ public class ActionProcessor {
 			Method getAcnames = lib.getDeclaredMethod("getActionNames");
 			String[] names = (String[])getAcnames.invoke(lib.newInstance());
 			for (String n : names) {
-				System.out.println("loading " + n);
 				loader.loadClass(name + "$1" + apcname + "$1" + n);
 			}
 			// get the ActionProvider provider 
 			Method extractAP = lib.getDeclaredMethod("getActionProvider");
-			System.out.println("loaded method");
 			
 			
 			ActionProvider ap = (ActionProvider) extractAP.invoke(lib.newInstance());
-			System.out.println("called extractor");
+			
 			ap.init(eh);
 			actionProviders.add(ap);
 			
@@ -101,6 +100,7 @@ public class ActionProcessor {
 	}
 	
 	public Action getAction(String name) {
+		//System.out.println("loading " + name);
 		for (ActionMetadata am : this.actions.keySet()) {
 			if (am.getName().equals(name)) {
 				return getAction(am);
@@ -109,7 +109,14 @@ public class ActionProcessor {
 		return null;
 	}
 	
-	
+	public ActionMetadata getMetadata(String name) {
+		for (ActionMetadata am : this.actions.keySet()) {
+			if (am.getName().equals(name)) {
+				return am;
+			}
+		}
+		return null;
+	}
 	
 	public void initAllActionProviders(ErrorHandler eh) {
 		for (int c = 0; c < this.actionProviders.size(); c++) {

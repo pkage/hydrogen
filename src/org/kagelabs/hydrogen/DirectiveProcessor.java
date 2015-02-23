@@ -2,6 +2,8 @@ package org.kagelabs.hydrogen;
 
 import java.util.ArrayList;
 
+import com.sun.xml.internal.bind.v2.model.core.Ref;
+
 /**
  * Directive Processor
  * @author Patrick Kage
@@ -36,15 +38,15 @@ public class DirectiveProcessor {
 	
 	public boolean tick(ErrorHandler eh) {
 		if(head < bundle.getSize()) {
-			System.out.println("exec " + bundle.get(head).getFull());
+			//System.out.println("exec " + bundle.get(head).getFull());
 			switch(bundle.get(head).getType()) {
 			case ASSIGNMENT:
 				if (bundle.get(head).getSplit().size() != 3) {
 					eh.addError("Invalid assignment", "Invalid arg count", "Directive Processor");
 				}
-				System.out.println("Setting " + toReference(bundle.get(head).getSplit().get(0).toString() + " to " + ( (toValue(bundle.get(head).getSplit().get(2)).getType() == VarType.NUMBER) ? toValue(bundle.get(head).getSplit().get(2)).getNumber() : toValue(bundle.get(head).getSplit().get(2)).getString() )));
+				//System.out.println("Setting " + toReference(bundle.get(head).getSplit().get(0).toString() + " to " + ( (toValue(bundle.get(head).getSplit().get(2)).getType() == VarType.NUMBER) ? toValue(bundle.get(head).getSplit().get(2)).getNumber() : toValue(bundle.get(head).getSplit().get(2)).getString() )));
 				global.setVariable(toReference(bundle.get(head).getSplit().get(0)), toValue(bundle.get(head).getSplit().get(2)));
-				System.out.println(global.dump());
+				//System.out.println(global.dump());
 				break;
 			case BLANK:
 				break;
@@ -75,21 +77,21 @@ public class DirectiveProcessor {
 					eh.addError("Invalid Comparison", "Invalid comparation operand", "Directive Processor");
 				}
 				if ((ct == ComparationType.EQUALTO || ct == ComparationType.GREATERTHANOREQUALTO || ct == ComparationType.LESSTHANOREQUALTO) && cr == ComparationResult.EQUALTO) {
-					System.out.println("positive comparation");break;
+					//System.out.println("positive comparation");break;
 				} else if (ct == ComparationType.GREATERTHAN && cr == ComparationResult.GREATERTHAN) {
-					System.out.println("positive comparation");break;
+					//System.out.println("positive comparation");break;
 				} else if (ct == ComparationType.LESSTHAN && cr == ComparationResult.LESSTHAN) {
-					System.out.println("positive comparation");break;
+					//System.out.println("positive comparation");break;
 				} else if (ct == ComparationType.NOTEQUALTO && cr != ComparationResult.EQUALTO) {
-					System.out.println("positive comparation");break;
+					//System.out.println("positive comparation");break;
 				}
-				System.out.println("negative comparation");
+				//System.out.println("negative comparation");
 				head++;
 				break;
 			case GOTO:
 				for(int i = 0; i < bundle.getSize(); i++) {
 					if (bundle.get(i).getType() == DirectiveType.LABEL) {
-						System.out.println("found label at " + i);
+						//System.out.println("found label at " + i);
 						if (toValue(bundle.get(i).getSplit().get(1)).compareTo(toValue(bundle.get(head).getSplit().get(1))) == ComparationResult.EQUALTO) {
 							head = i;
 							break;
@@ -104,7 +106,7 @@ public class DirectiveProcessor {
 				break;
 			case LOADEXTERNAL:
 				//TODO : make less shitty
-				System.out.println("Loading " + bundle.get(head).getSplit().get(1));
+				//System.out.println("Loading " + bundle.get(head).getSplit().get(1));
 				ap.importLibrary(eh, bundle.get(head).getSplit().get(1));
 				//ap.initAllActionProviders(eh);
 				
@@ -114,6 +116,27 @@ public class DirectiveProcessor {
 				this.finished = true;
 				return true;
 			case CALLEXTERNALWITHRET:
+				Action act2;
+				//System.out.println("Call external \"" + bundle.get(head).getSplit().get(2) + "\"");
+				
+				if (ap.hasAction(bundle.get(head).getSplit().get(2))) {
+					act2 = ap.getAction(bundle.get(head).getSplit().get(2));
+				} else {
+					eh.addError(new Error("Unknown Token", "Unregistered token execution", "Directive Processor"));
+					return false;
+				}
+				ArrayList<Value> args2 = new ArrayList<Value>();
+				for (int i = 1; i < bundle.get(head).getSplit().size(); i++) {
+					args2.add(this.toValue(bundle.get(head).getSplit().get(i)));
+				}
+				Reference ret = toReference(bundle.get(head).getSplit().get(0));
+				if (ret.getPrefix() != act2.getMetadata().getReturnPrefix()) {
+					eh.addError("Invalid return type", "Can't store return in that variable", "Directive Processor");
+					return false;
+				}
+				Value[] argarr2 = args2.toArray(new Value[args2.size()]);
+				global.setVariable(ret, act2.call(eh, argarr2));
+				break;
 			case SUBROUTINECALL:
 			case SUBROUTINEDEFINITION:
 			default:
@@ -152,12 +175,12 @@ public class DirectiveProcessor {
 	}
 	
 	private Value toValue(String str) {
-		System.out.println("resolving " + str);
+		//System.out.println("resolving " + str);
 		if(str.startsWith("$")) {
 			Value value = new Value(VarType.STRING);
-			System.out.println("global does " + ( (global.contains(new Reference(str.substring(1), VarType.STRING))) ? "" : "not " ) + "contain " + (new Reference(str.substring(1), VarType.STRING)).toString());
+			//System.out.println("global does " + ( (global.contains(new Reference(str.substring(1), VarType.STRING))) ? "" : "not " ) + "contain " + (new Reference(str.substring(1), VarType.STRING)).toString());
 			value.setString(global.getVariable(new Reference(str.substring(1), VarType.STRING)).getString());
-			System.out.println("resolved value as " + value.getString());
+			//System.out.println("resolved value as " + value.getString());
 			return value;
 		}
 		else if(str.startsWith("\"")) {
