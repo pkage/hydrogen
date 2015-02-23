@@ -119,6 +119,6 @@ public class io {
         	return "IOActionProvider";
         }
         public String[] getActionNames() {
-        	return new String[]{ "Print", "Read" };
+        	return new String[]{ "Print", "Read", "Write" };
         }
 }

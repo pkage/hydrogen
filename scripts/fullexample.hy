@@ -21,6 +21,10 @@ goto 13
 
 label 12
 print "hi patrick"
+#c = 13
+goto #c
+
 
 label 13
-//insert insertme.pkb
+write "hello, "
+write $n

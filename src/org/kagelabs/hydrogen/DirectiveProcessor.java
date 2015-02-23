@@ -77,13 +77,17 @@ public class DirectiveProcessor {
 					eh.addError("Invalid Comparison", "Invalid comparation operand", "Directive Processor");
 				}
 				if ((ct == ComparationType.EQUALTO || ct == ComparationType.GREATERTHANOREQUALTO || ct == ComparationType.LESSTHANOREQUALTO) && cr == ComparationResult.EQUALTO) {
-					//System.out.println("positive comparation");break;
+					//System.out.println("positive comparation");
+					break;
 				} else if (ct == ComparationType.GREATERTHAN && cr == ComparationResult.GREATERTHAN) {
-					//System.out.println("positive comparation");break;
+					//System.out.println("positive comparation");
+					break;
 				} else if (ct == ComparationType.LESSTHAN && cr == ComparationResult.LESSTHAN) {
-					//System.out.println("positive comparation");break;
+					//System.out.println("positive comparation");
+					break;
 				} else if (ct == ComparationType.NOTEQUALTO && cr != ComparationResult.EQUALTO) {
-					//System.out.println("positive comparation");break;
+					//System.out.println("positive comparation");
+					break;
 				}
 				//System.out.println("negative comparation");
 				head++;
@@ -135,7 +139,7 @@ public class DirectiveProcessor {
 					return false;
 				}
 				Value[] argarr2 = args2.toArray(new Value[args2.size()]);
-				global.setVariable(ret, act2.call(eh, argarr2));
+				global.setVariable(toReference(bundle.get(head).getSplit().get(0)), act2.call(eh, argarr2));
 				break;
 			case SUBROUTINECALL:
 			case SUBROUTINEDEFINITION:
