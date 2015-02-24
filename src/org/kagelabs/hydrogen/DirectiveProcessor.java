@@ -152,6 +152,7 @@ public class DirectiveProcessor {
 			head++;
 			return true;
 		}
+		this.finished = true;
 		return false;
 	}
 	

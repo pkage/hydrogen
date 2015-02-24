@@ -70,4 +70,8 @@ public class Interpreter {
 	public boolean isDone() {
 		return done;
 	}
+	
+	public void registerActionProvider(ActionProvider ap) {
+		this.dirp.addActionProvider(ap);
+	}
 }

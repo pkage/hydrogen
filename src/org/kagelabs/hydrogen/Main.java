@@ -12,7 +12,7 @@ public class Main {
 	public static void main(String[] args) {
 		//System.out.println("It's alive!");
 		Main main = new Main();
-		main.run();
+		main.http();
 		//test();
 	}
 	
@@ -23,6 +23,11 @@ public class Main {
 			hy.tick();
 		}
 
+	}
+	
+	public void http() {
+		HttpComponent hc = new HttpComponent(8000);
+		hc.begin("scripts/http/begin.hy");
 	}
 	
 	public static void test() {
