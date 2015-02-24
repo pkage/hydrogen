@@ -1,6 +1,7 @@
 
 // this is a test
 import org.kagelabs.hydrogen.stl.io
+import org.kagelabs.hydrogen.stl.math
 
 $n = "hi"
 $n = "hello"
@@ -18,4 +19,10 @@ print $name
 if $name == "Patrick"
 goto 1
 
-print "exiting"
+#c = 10
+#d % + #c 120
+#c = #d
+
+
+write "10 + 120 = "
+print #c

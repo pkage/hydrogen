@@ -18,8 +18,8 @@ public class math {
 	                                        ActionMetadata meta;
 	                                        Add() {
 	                                                meta = new ActionMetadata();
-	                                                meta.setName("add");
-	                                                meta.setReturnPrefix('\0');
+	                                                meta.setName("+");
+	                                                meta.setReturnPrefix('#');
 	                                        }
 	                                        public ActionMetadata getMetadata() {
 	                                                return meta;
@@ -28,20 +28,59 @@ public class math {
 	                                                // do nothing
 	                                        }
 	                                        public Value call(ErrorHandler eh, Value[] values) {
+	                                        	
 	                                                for (Value v : values) {
 	                                                	if (v.getType() != VarType.NUMBER) {
-//	                                                		eh.addError(new Error(""));
+	                                                		eh.addError("Invalid operation!", "Can only add numbers!", "math");
+	                                                		return new Value(VarType.INVALID);
 	                                                	}
 	                                                }
-	                                        		
-	                                                return new Value(VarType.INVALID);
+	                                        		Value ret = new Value(VarType.NUMBER);
+	                                        		ret.setNumber(0);
+	                                        		for (Value v : values) {
+	                                        			ret.setNumber(ret.getNumber() + v.getNumber());
+	                                        		}
+
+	                                                return ret;
 	                                        }
 	                                }
 	                                Add add = new Add();
 	                                this.actionMap.put(add.getMetadata(), add);
+
+	                                class Subtract implements Action {
+                                        ActionMetadata meta;
+                                        Subtract() {
+                                                meta = new ActionMetadata();
+                                                meta.setName("-");
+                                                meta.setReturnPrefix('#');
+                                        }
+                                        public ActionMetadata getMetadata() {
+                                                return meta;
+                                        }
+                                        public void init(ErrorHandler eh) {
+                                                // do nothing
+                                        }
+                                        public Value call(ErrorHandler eh, Value[] values) {
+                                                for (Value v : values) {
+                                                	
+                                                	if (v.getType() != VarType.NUMBER) {
+                                                		eh.addError("Invalid operation!", "Can only add numbers!", "math");
+                                                		return new Value(VarType.INVALID);
+                                                	}
+                                                }
+                                        		Value ret = new Value(VarType.NUMBER);
+                                        		ret.setNumber(0);
+                                        		for (Value v : values) {
+                                        			ret.setNumber(ret.getNumber() - v.getNumber());
+                                        		}
+                                                return ret;
+                                        }
+	                                }
+	                                Subtract sub = new Subtract();
+	                                this.actionMap.put(sub.getMetadata(), sub);
 	                                
 	                        }
-	    
+	                        
 
 	                        public HashMap<ActionMetadata, Action> getActionDictionary() {
 	                                return this.actionMap;
@@ -59,7 +98,7 @@ public class math {
 	        	return "MathActionProvider";
 	        }
 	        public String[] getActionNames() {
-	        	return new String[]{ "Print", "Read" };
+	        	return new String[]{ "Add", "Subtract" };
 	        }
 	}
 

@@ -130,7 +130,7 @@ public class DirectiveProcessor {
 					return false;
 				}
 				ArrayList<Value> args2 = new ArrayList<Value>();
-				for (int i = 1; i < bundle.get(head).getSplit().size(); i++) {
+				for (int i = 3; i < bundle.get(head).getSplit().size(); i++) {
 					args2.add(this.toValue(bundle.get(head).getSplit().get(i)));
 				}
 				Reference ret = toReference(bundle.get(head).getSplit().get(0));
@@ -139,6 +139,7 @@ public class DirectiveProcessor {
 					return false;
 				}
 				Value[] argarr2 = args2.toArray(new Value[args2.size()]);
+				//System.out.println("Converting " + bundle.get(head).getSplit().get(0) + " to ref");
 				global.setVariable(toReference(bundle.get(head).getSplit().get(0)), act2.call(eh, argarr2));
 				break;
 			case SUBROUTINECALL:
@@ -201,11 +202,14 @@ public class DirectiveProcessor {
 		double num = 0;
 		try {
 			num = Double.parseDouble(str);
+			value.setNumber(num);
+			System.out.println("str: " + str + "  num: " + num + "  value.getNumber(): " + value.getNumber());
+			return value;
 		} catch(NumberFormatException nfe) {
 			return new Value(VarType.INVALID);
 		}
-		value.setNumber(num);
-		return value;
+		
+		
 	}
 	
 	private Reference toReference(String str) {

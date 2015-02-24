@@ -5,7 +5,7 @@ import org.kagelabs.hydrogen.stl.io
 print "Hello World!"
 
 write "What's your name? : "
-$n % read
+#n % - 1 1
 
 
 #num = 12
