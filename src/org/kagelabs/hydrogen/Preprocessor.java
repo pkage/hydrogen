@@ -14,6 +14,12 @@ public class Preprocessor {
 		return lb;
 	}
 	
+	public LineBundle processLineBundle(LineBundle lb) {
+		while (this.containsInsert(lb)) {
+			lb = replaceLineWithBundle(lb, firstInsertLocation(lb), resolveFile(getFilename(lb, firstInsertLocation(lb))));
+		}
+		return lb;
+	}
 	
 	private String getFilename(LineBundle lb, int index) {
 		String fn = lb.get(index);

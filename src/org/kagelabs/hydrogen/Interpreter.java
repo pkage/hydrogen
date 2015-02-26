@@ -38,6 +38,20 @@ public class Interpreter {
 		dirp.reset();
 	}
 	
+	public void initialize(LineBundle lb) {
+		Preprocessor pp = new Preprocessor();
+		lines = pp.processLineBundle(lb);
+		DirectiveBundle db = new DirectiveBundle();
+		for (int c = 0; c < lines.length(); c++) {
+			Directive current = new Directive(lines.get(c));
+			current = DirectiveClassifier.classifyDirective(current);
+			
+			db.add(current);
+		}
+		dirp = new DirectiveProcessor(db);
+		dirp.reset();
+	}
+	
 	public void tick() {
 		if (!errored && !done) {
 			dirp.tick(eh);
