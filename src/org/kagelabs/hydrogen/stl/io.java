@@ -21,6 +21,7 @@ public class io {
                                         Print() {
                                                 meta = new ActionMetadata();
                                                 meta.setName("print");
+                                                meta.setNamespace("io");
                                                 meta.setReturnPrefix('\0');
                                         }
                                         public ActionMetadata getMetadata() {
@@ -49,6 +50,7 @@ public class io {
                                             meta = new ActionMetadata();
                                             meta.setName("read");
                                             meta.setReturnPrefix('$');
+                                            meta.setNamespace("io");
                                     }
                                     public ActionMetadata getMetadata() {
                                             return meta;
@@ -67,6 +69,7 @@ public class io {
                                     			}
                                     			Value value = new Value(VarType.STRING);
                                     			value.setString(kb.nextLine());
+                                    			
                                     			return value;
                                     }       
                                 }
@@ -77,6 +80,7 @@ public class io {
                                             meta = new ActionMetadata();
                                             meta.setName("write");
                                             meta.setReturnPrefix('\0');
+                                            meta.setNamespace("io");
                                     }
                                     public ActionMetadata getMetadata() {
                                             return meta;

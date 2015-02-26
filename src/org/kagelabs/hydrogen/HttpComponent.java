@@ -60,6 +60,7 @@ public class HttpComponent {
 						this.am = new ActionMetadata();
 						am.setArguments("$$");
 						am.setName("addroute");
+						am.setNamespace("http");
 						am.setReturnPrefix('\0');
 						this.parent = parent;
 					}
@@ -95,6 +96,7 @@ public class HttpComponent {
 						this.am = new ActionMetadata();
 						am.setArguments("");
 						am.setName("startserver");
+						am.setNamespace("http");
 						am.setReturnPrefix('\0');
 						this.parent = parent;
 					}

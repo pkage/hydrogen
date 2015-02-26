@@ -1,7 +1,9 @@
 import org.kagelabs.hydrogen.stl.io
 
-print "configuring server..."
+io.print "configuring server..."
 
-addroute "/" "scripts/http/index.hy"
+http.addroute "/" "scripts/http/index.hy"
 
-startserver
+http.addroute "/api" "scripts/http/json.hy"
+
+http.startserver

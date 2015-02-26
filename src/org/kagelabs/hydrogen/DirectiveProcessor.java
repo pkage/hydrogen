@@ -2,7 +2,7 @@ package org.kagelabs.hydrogen;
 
 import java.util.ArrayList;
 
-import com.sun.xml.internal.bind.v2.model.core.Ref;
+//import com.sun.xml.internal.bind.v2.model.core.Ref;
 
 /**
  * Directive Processor
@@ -52,6 +52,7 @@ public class DirectiveProcessor {
 				break;
 			case CALLEXTERNAL:
 				Action act;
+
 				if (ap.hasAction(bundle.get(head).getSplit().get(0))) {
 					act = ap.getAction(bundle.get(head).getSplit().get(0));
 				} else {
@@ -164,6 +165,7 @@ public class DirectiveProcessor {
 		this.head = head;
 	}
 
+	/*
 	private int getLabelLocation(String id) {
 		for(int i = 0; i < bundle.getSize(); i++) {
 			if(bundle.get(i).getSplit().get(0).equals("label")&&bundle.get(i).getSplit().get(1).equals(id)) {
@@ -171,7 +173,7 @@ public class DirectiveProcessor {
 			}
 		}
 		return -1;
-	}
+	} */
 	
 	public Value resolveReference(Reference ref) {
 		if(!global.contains(ref)) {
@@ -191,7 +193,9 @@ public class DirectiveProcessor {
 		}
 		else if(str.startsWith("\"")) {
 			Value value = new Value(VarType.STRING);
-			value.setString(str.substring(1, str.length()-1));
+			String tmp = str.substring(1, str.length()-1);
+			tmp = StringUnEscaper.unescape(tmp);
+			value.setString(tmp);
 			return value;
 		}
 		else if(str.startsWith("#")) {
@@ -204,7 +208,7 @@ public class DirectiveProcessor {
 		try {
 			num = Double.parseDouble(str);
 			value.setNumber(num);
-			System.out.println("str: " + str + "  num: " + num + "  value.getNumber(): " + value.getNumber());
+			
 			return value;
 		} catch(NumberFormatException nfe) {
 			return new Value(VarType.INVALID);

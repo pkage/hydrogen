@@ -1,6 +1,5 @@
 package org.kagelabs.hydrogen;
 import java.io.*;
-import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -11,23 +10,44 @@ import java.util.Scanner;
 public class Main {
 	public static void main(String[] args) {
 		//System.out.println("It's alive!");
+		
+		
 		Main main = new Main();
-		main.http();
-		//test();
+		
+		boolean ide = false, http = false;
+		String name = null;
+		for (String arg : args) {
+			if (arg.equals("--http")) {
+				http = true;
+			} else if (arg.equals("--ide")) {
+				ide = true;
+			} else {
+				name = arg;
+			}
+		}
+		if (ide) {
+		
+		} else if (http) {
+			main.http(name);
+		} else if (name != null) {
+			main.run(name);
+		} else {
+			System.out.println("Usage: hyd <path> [--http] [--ide]");
+		}
 	}
 	
-	public void run() {
+	public void run(String name) {
 		Interpreter hy = new Interpreter();
-		hy.initialize("scripts/alive.hy");
+		hy.initialize(name);
 		while (hy.canRunMore()) {
 			hy.tick();
 		}
 
 	}
 	
-	public void http() {
+	public void http(String name) {
 		HttpComponent hc = new HttpComponent(8000);
-		hc.begin("scripts/http/begin.hy");
+		hc.begin(name);
 	}
 	
 	public static void test() {
@@ -81,13 +101,14 @@ public class Main {
 		Action action = ap.getAction(kb.nextLine());
 		System.out.print("Loaded action. Argument: ");
 		Value arg = new Value(VarType.STRING);
-		arg.setString(kb.nextLine());
+		arg.setString(kb.nextLine());kb.close();
 		action.call(eh, new Value[]{ arg });
 		if (eh.hasErrors()) {
 			System.out.println(eh.generateReport());
 		} else {
 			System.out.println("\nfinished call successfully");
 		}
+		
 		
 	}
 }

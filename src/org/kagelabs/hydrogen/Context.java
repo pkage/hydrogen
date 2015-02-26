@@ -17,7 +17,7 @@ public class Context {
 	}
 	
 	public boolean setVariable(Reference ref, Value val) {
-		mem.put(ref, val);
+		mem.put(normalize(ref), val);
 		return true;
 	}
 	
@@ -30,6 +30,7 @@ public class Context {
 	}
 	
 	public boolean setVariable(String name, Value val) {
+		System.out.println("Setting " + name + " to " + val);
 		if (!Reference.isValid(name, val.getType())) {
 			return false;
 		}

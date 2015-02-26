@@ -1,21 +1,28 @@
 
 // this is a test
 import org.kagelabs.hydrogen.stl.io
+import org.kagelabs.hydrogen.stl.sys
 import org.kagelabs.hydrogen.stl.math
+import org.kagelabs.hydrogen.stl.string
 
 $n = "hi"
 $n = "hello"
-print $n
+io.print $n
 
 label 1
 
-$msg = "hello world! i'm alive!"
-print $msg
+$msg = "hello world! i'm alive!\nAnd I can use escape characters!"
+io.print $msg
 
-print "what's your name: "
-$name % read
-write "Hello, "
-print $name
+$date % sys.xcall "date"
+
+$date % str.cat "current date: " $date
+io.print $date
+
+io.print "what's your name: "
+$name % io.read
+$name % str.cat "Hello, " $name 
+io.print $name
 if $name == "Patrick"
 goto 1
 
@@ -23,6 +30,5 @@ goto 1
 #d % + #c 120
 #c = #d
 
-
-write "10 + 120 = "
-print #c
+io.write "10 + 120 = "
+io.print #c

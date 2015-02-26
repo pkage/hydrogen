@@ -9,6 +9,9 @@ import java.util.ArrayList;
  * 
  */
 public class SplitDirective extends ArrayList<String> {
+	
+	private static final long serialVersionUID = 1L;
+
 	SplitDirective() {
 		super();
 	}

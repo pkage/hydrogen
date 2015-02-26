@@ -12,8 +12,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.io.*;
 
 public class ActionProcessor {
 	private ArrayList<ActionProvider> actionProviders;
@@ -102,7 +100,7 @@ public class ActionProcessor {
 	public Action getAction(String name) {
 		//System.out.println("loading " + name);
 		for (ActionMetadata am : this.actions.keySet()) {
-			if (am.getName().equals(name)) {
+			if (am.getFullName().equals(name)) {
 				return getAction(am);
 			}
 		}
@@ -111,7 +109,7 @@ public class ActionProcessor {
 	
 	public ActionMetadata getMetadata(String name) {
 		for (ActionMetadata am : this.actions.keySet()) {
-			if (am.getName().equals(name)) {
+			if (am.getFullName().equals(name)) {
 				return am;
 			}
 		}
@@ -126,9 +124,14 @@ public class ActionProcessor {
 	}
 	public boolean hasAction(String a){
 		for(ActionMetadata am : this.actions.keySet()){
-			if(am.getName().equals(a))
+			if(am.getFullName().equals(a))
 				return true;
 		}
 		return false;
+	}
+	public void dump() {
+		for (ActionMetadata am : this.actions.keySet()) {
+			System.out.println(am.getFullName());
+		}
 	}
 }
