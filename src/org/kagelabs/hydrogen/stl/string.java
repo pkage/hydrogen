@@ -46,7 +46,7 @@ public class string {
 					Substring() {
 						meta = new ActionMetadata();
 						meta.setName("substr");
-						meta.setReturnPrefix('#');
+						meta.setReturnPrefix('$');
 						meta.setNamespace("str");
 					}
 					public ActionMetadata getMetadata() {
