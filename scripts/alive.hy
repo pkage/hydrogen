@@ -21,8 +21,8 @@ io.print $date
 
 io.print "what's your name: "
 $name % io.read
-$name % str.cat "Hello, " $name 
-io.print $name
+$cname % str.cat "Hello, " $name 
+io.print $cname
 if $name == "Patrick"
 goto 1
 
