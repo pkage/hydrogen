@@ -1,12 +1,12 @@
 package org.kagelabs.hydrogen;
 
-import java.awt.FlowLayout;
-import java.awt.Panel;
-import java.awt.TextField;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.ByteArrayOutputStream;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
@@ -15,7 +15,10 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 
 public class IDE extends JFrame {	
 		
@@ -24,10 +27,15 @@ public class IDE extends JFrame {
 		private JMenuItem open, save, run, syntax, about;
 		private FlowLayout layout;
 		private JTextArea textarea, output;
+		private JScrollPane textareaScroller, outputScroller;
 		
 	public IDE(){
 		 super(); 
-		 setBounds(100,100,300,500);
+		 setBounds(100,100,300,460);
+		 Dimension fourth = new Dimension(300,460);
+		 setMaximumSize(fourth);
+		 setMinimumSize(fourth);
+		 this.setResizable(false);
 		 setVisible(true);	
 		 this.layout = new FlowLayout();
 		 this.setLayout(layout);
@@ -52,14 +60,24 @@ public class IDE extends JFrame {
 		 this.project.add(run);
 		 this.help.add(syntax);
 		 this.help.add(about);
-		 this.textarea = new JTextArea(22, 24);
 		 
-		 this.add(textarea);
-		 this.output = new JTextArea(5, 24);
+		 
+		 this.textarea = new JTextArea(22,24);
+		 this.textarea.setText("import org.kagelabs.hydrogen.stl.io\nio.print \"hello world!\"");
+		 this.textareaScroller = new JScrollPane(textarea);
+		 this.textareaScroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		 this.textareaScroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		 this.add(textareaScroller);
+		 
+		 this.output = new JTextArea(5,24);
 		 this.output.setEditable(false);
-		 this.add(output);
-		 this.textarea.setText("import org.kagelabs.hydrogen.stl.io\nio.print \"hello world!\"\nio.print \"hello again!\"");
+		 this.outputScroller = new JScrollPane(output);
+		 this.outputScroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		 this.outputScroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		 this.add(outputScroller);
 		 
+		 
+
 		 //JMenuItem menuItem = new JMenuItem(); 
 		 
 	}
@@ -68,14 +86,6 @@ public class IDE extends JFrame {
 		
 	}
 	
-	public static void main(String args[]){
-		
-		IDE ide = new IDE();
-		ide.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		ide.setVisible(true);
-		
-		
-	}
 	class IDEActionListener implements ActionListener {
 		IDE parent;
 		IDEActionListener(IDE parent) {
@@ -91,15 +101,16 @@ public class IDE extends JFrame {
 				for (String c : splitcode) {
 					lb.add(c);
 				}
-				Interpreter ip =  new Interpreter();
-				ip.initialize(lb);
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				System.setOut(new PrintStream(baos));
-				while (ip.canRunMore()) {
-					ip.tick();
-					this.parent.output.setText(baos.toString());
+				Interpreter hy =  new Interpreter();
+				hy.initialize(lb);
+				this.parent.output.setText("");
+				PrintStream con = new PrintStream(new TextAreaOutputStream(this.parent.output));
+				System.setOut(con); System.setErr(con);
+				while (hy.canRunMore()) {
+					hy.tick();
 				}
 				System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+				System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.out)));
 			}
 		}
 		
