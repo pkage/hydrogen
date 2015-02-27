@@ -47,8 +47,10 @@ public class ErrorHandler {
 		return (stack.size() > 0);
 	}
 	
+	public int size() {return stack.size();}
+	
 	void clear() {
-		stack.clear();
+		this.stack = new ArrayDeque<Error>();
 	}
 
 	public void addError(String name, String reason, String origin) {

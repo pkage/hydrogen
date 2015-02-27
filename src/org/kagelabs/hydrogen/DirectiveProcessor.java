@@ -32,6 +32,10 @@ public class DirectiveProcessor {
 		this.global = new Context();
 	}
 	
+	public void addDirective(Directive dir) {
+		this.bundle.add(dir);
+	}
+	
 	public void reset() {
 		this.head = 0;
 	}
@@ -255,5 +259,12 @@ public class DirectiveProcessor {
 	
 	public void addActionProvider(ActionProvider adict) {
 		this.ap.registerActionProvider(adict);
+	}
+	public boolean forceHeadAdvance() {
+		if (head + 1 != bundle.getSize()) {
+			head++;
+			return true;
+		}
+		return false;
 	}
 }
